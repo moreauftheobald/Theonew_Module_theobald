@@ -230,7 +230,7 @@ class pdf_compte_client
   				$out = $outputlangs->convToOutputCharset($object->email);
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
-  				$pdf->SetFont('','', $default_font_size+2);
+  				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(90, 82);
   				$out = $outputlangs->convToOutputCharset($object->forme_juridique);
   				$pdf->MultiCell(120, 0, $out,0,'L');
@@ -241,17 +241,17 @@ class pdf_compte_client
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$pdf->SetFont('','', $default_font_size+2);
-  				$pdf->SetXY(90, 95);
+  				$pdf->SetXY(90, 96);
   				$out = $outputlangs->convToOutputCharset($object->capital);
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$pdf->SetFont('','', $default_font_size+2);
-  				$pdf->SetXY(90, 101);
+  				$pdf->SetXY(90, 102);
   				$out = $outputlangs->convToOutputCharset($object->idprof1);
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$pdf->SetFont('','', $default_font_size+2);
-  				$pdf->SetXY(90, 109);
+  				$pdf->SetXY(90, 110);
   				$out = $outputlangs->convToOutputCharset($object->idprof4);
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
