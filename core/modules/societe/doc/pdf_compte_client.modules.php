@@ -117,184 +117,184 @@ class pdf_compte_client extends ModelePDFSuppliersOrders
 	 */
 	function write_file($object,$outputlangs,$srctemplatepath='',$hidedetails=0,$hidedesc=0,$hideref=0)
 	{
-		global $user,$langs,$conf,$hookmanager,$mysoc;
+// 		global $user,$langs,$conf,$hookmanager,$mysoc;
 
-		if (! is_object($outputlangs)) $outputlangs=$langs;
-		// For backward compatibility with FPDF, force output charset to ISO, because FPDF expect text to be encoded in ISO
-		if (! empty($conf->global->MAIN_USE_FPDF)) $outputlangs->charset_output='ISO-8859-1';
+// 		if (! is_object($outputlangs)) $outputlangs=$langs;
+// 		// For backward compatibility with FPDF, force output charset to ISO, because FPDF expect text to be encoded in ISO
+// 		if (! empty($conf->global->MAIN_USE_FPDF)) $outputlangs->charset_output='ISO-8859-1';
 
-		$outputlangs->load("main");
-		$outputlangs->load("dict");
-		$outputlangs->load("companies");
-		$outputlangs->load("bills");
-		$outputlangs->load("products");
-		$outputlangs->load("orders");
+// 		$outputlangs->load("main");
+// 		$outputlangs->load("dict");
+// 		$outputlangs->load("companies");
+// 		$outputlangs->load("bills");
+// 		$outputlangs->load("products");
+// 		$outputlangs->load("orders");
 
-		if ($conf->societe->dir_output)
-		{
-            $object->fetch_thirdparty();
+// 		if ($conf->societe->dir_output)
+// 		{
+//             $object->fetch_thirdparty();
 
-			// Definition of $dir and $file
-			if ($object->specimen)
-			{
-				$dir = $conf->societe->dir_output;
-				$file = $dir . "/SPECIMEN.pdf";
-			}
-			else
-			{
-				$objectref = dol_sanitizeFileName($object->ref);
-				$dir = $conf->societe->dir_output . "/" . $objectref;
-				$file = $dir . "/cpt_" . $objectref . ".pdf";
-			}
+// 			// Definition of $dir and $file
+// 			if ($object->specimen)
+// 			{
+// 				$dir = $conf->societe->dir_output;
+// 				$file = $dir . "/SPECIMEN.pdf";
+// 			}
+// 			else
+// 			{
+// 				$objectref = dol_sanitizeFileName($object->ref);
+// 				$dir = $conf->societe->dir_output . "/" . $objectref;
+// 				$file = $dir . "/cpt_" . $objectref . ".pdf";
+// 			}
 
-			if (! file_exists($dir))
-			{
-				if (dol_mkdir($dir) < 0)
-				{
-					$this->error=$outputlangs->trans("ErrorCanNotCreateDir",$dir);
-					return 0;
-				}
-			}
+// 			if (! file_exists($dir))
+// 			{
+// 				if (dol_mkdir($dir) < 0)
+// 				{
+// 					$this->error=$outputlangs->trans("ErrorCanNotCreateDir",$dir);
+// 					return 0;
+// 				}
+// 			}
 
-			if (file_exists($dir))
-			{
+// 			if (file_exists($dir))
+// 			{
 
-                $pdf=pdf_getInstance($this->format);
-                $default_font_size = pdf_getPDFFontSize($outputlangs)-0.3;	// Must be after pdf_getInstance
-                $heightforinfotot = 50;	// Height reserved to output the info and total part
-		        $heightforfreetext= (isset($conf->global->MAIN_PDF_FREETEXT_HEIGHT)?$conf->global->MAIN_PDF_FREETEXT_HEIGHT:5);	// Height reserved to output the free text on last page
-	            $heightforfooter = $this->marge_basse + 8;	// Height reserved to output the footer (value include bottom margin)
-                $pdf->SetAutoPageBreak(1,0);
+//                 $pdf=pdf_getInstance($this->format);
+//                 $default_font_size = pdf_getPDFFontSize($outputlangs)-0.3;	// Must be after pdf_getInstance
+//                 $heightforinfotot = 50;	// Height reserved to output the info and total part
+// 		        $heightforfreetext= (isset($conf->global->MAIN_PDF_FREETEXT_HEIGHT)?$conf->global->MAIN_PDF_FREETEXT_HEIGHT:5);	// Height reserved to output the free text on last page
+// 	            $heightforfooter = $this->marge_basse + 8;	// Height reserved to output the footer (value include bottom margin)
+//                 $pdf->SetAutoPageBreak(1,0);
 
-                if (class_exists('TCPDF'))
-                {
-                    $pdf->setPrintHeader(false);
-                    $pdf->setPrintFooter(false);
-                }
-                $pdf->SetFont(pdf_getPDFFont($outputlangs));
-
-
-				$pdf->Open();
-				$pdf->SetDrawColor(128,128,128);
-
-				$pdf->SetTitle($outputlangs->convToOutputCharset('GOP-' . $object->ref));
-				$pdf->SetSubject($outputlangs->transnoentities("Garantie de paiement"));
-				$pdf->SetCreator("Dolibarr ".DOL_VERSION);
-				$pdf->SetAuthor($outputlangs->convToOutputCharset($user->getFullName($outputlangs)));
-				if (! empty($conf->global->MAIN_DISABLE_PDF_COMPRESSION)) $pdf->SetCompression(false);
-
-				$pdf->SetMargins($this->marge_gauche, $this->marge_haute, $this->marge_droite);   // Left, Top, Right
-
-				// Add Pages from models
-				$infile= DOL_DATA_ROOT.'/theobald/modelpdf/ouverture_cpt.pdf';
-				if (file_exists($infile) && is_readable($infile)) {
-					$pagecount = $pdf->setSourceFile($infile);
-					for($i = 1; $i <= $pagecount; $i ++) {
-						$tplIdx = $pdf->importPage($i);
-						if ($tplIdx!==false) {
-							$s = $pdf->getTemplatesize($tplIdx);
-							$pdf->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
-							$pdf->useTemplate($tplIdx);
-						} else {
-							setEventMessages(null, array($infile.' cannot be added, probably protected PDF'),'warnings');
-						}
-					}
-				}
-				$object->fetch_thirdparty();
+//                 if (class_exists('TCPDF'))
+//                 {
+//                     $pdf->setPrintHeader(false);
+//                     $pdf->setPrintFooter(false);
+//                 }
+//                 $pdf->SetFont(pdf_getPDFFont($outputlangs));
 
 
-				$pdf->SetPage(1);
+// 				$pdf->Open();
+// 				$pdf->SetDrawColor(128,128,128);
 
- 				$pdf->SetFont('','', $default_font_size-1);
- 				$pdf->SetXY(73.5, 59.1);
- 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_valid,'daytext'));
- 				$pdf->MultiCell(80, 0, $out,0,'L');
+// 				$pdf->SetTitle($outputlangs->convToOutputCharset('GOP-' . $object->ref));
+// 				$pdf->SetSubject($outputlangs->transnoentities("Garantie de paiement"));
+// 				$pdf->SetCreator("Dolibarr ".DOL_VERSION);
+// 				$pdf->SetAuthor($outputlangs->convToOutputCharset($user->getFullName($outputlangs)));
+// 				if (! empty($conf->global->MAIN_DISABLE_PDF_COMPRESSION)) $pdf->SetCompression(false);
 
-				//Nom et adresse du destinataire
- 				$out  = $object->thirdparty->name . "\r\n";
- 				$out .= $object->thirdparty->address. "\r\n";
- 				$out .= $object->thirdparty->zip . ' ' . $object->thirdparty->town ."\r\n";
- 				$out .= 'Tel: ' . $object->thirdparty->phone . ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email;
+// 				$pdf->SetMargins($this->marge_gauche, $this->marge_haute, $this->marge_droite);   // Left, Top, Right
 
- 				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 86.2);
-  				$out = $outputlangs->convToOutputCharset($out);
-  				$pdf->MultiCell(120, 0, $out,0,'L');
+// 				// Add Pages from models
+// 				$infile= DOL_DATA_ROOT.'/theobald/modelpdf/ouverture_cpt.pdf';
+// 				if (file_exists($infile) && is_readable($infile)) {
+// 					$pagecount = $pdf->setSourceFile($infile);
+// 					for($i = 1; $i <= $pagecount; $i ++) {
+// 						$tplIdx = $pdf->importPage($i);
+// 						if ($tplIdx!==false) {
+// 							$s = $pdf->getTemplatesize($tplIdx);
+// 							$pdf->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
+// 							$pdf->useTemplate($tplIdx);
+// 						} else {
+// 							setEventMessages(null, array($infile.' cannot be added, probably protected PDF'),'warnings');
+// 						}
+// 					}
+// 				}
+// 				$object->fetch_thirdparty();
 
-  				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 115.7);
-  				$out = $outputlangs->convToOutputCharset($this->emetteur->name);
-  				$pdf->MultiCell(120, 0, $out,0,'L');
 
-  				$object->fetchObjectLinked();
-  				if(!empty($object->linkedObjects['operationorder'])){
-  					$operationorder = new OperationOrder($object->db);
-  					$operationorder=array_values($object->linkedObjects['operationorder'])[0];
-  					$operationorder->fetch_optionals();
-  					if(!empty($operationorder->array_options['options_fk_dolifleet_vehicule'])){
-  						$vehicule = new doliFleetVehicule($object->db);
-  						$res = $vehicule->fetch($operationorder->array_options['options_fk_dolifleet_vehicule']);
-  						if($res>0){
-  							$dictVT = new dictionaryVehiculeType($object->db);
-  							$dictVM = new dictionaryVehiculeMark($object->db);
-  							$dictVM->fetch($vehicule->fk_vehicule_mark);
-  							$dictVT->fetch($vehicule->fk_vehicule_type);
-  							$pdf->SetFont('','', $default_font_size);
-  							$pdf->SetXY(45.5, 124.1);
-  							$text = $dictVT->label . ' ' . $dictVM->label. ' - VIN: ' . $vehicule->vin . ' - Immatriculation: ' . $vehicule->immatriculation;
-  							$out = $outputlangs->convToOutputCharset($text);
-  							$pdf->MultiCell(150, 0, $out,0,'L');
-  						}
-  					}
+// 				$pdf->SetPage(1);
 
-  				}
-  				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(44, 128.6);
-  				$out = $outputlangs->convToOutputCharset($object->ref);
-  				$pdf->MultiCell(150, 0, $out,0,'L');
+//  				$pdf->SetFont('','', $default_font_size-1);
+//  				$pdf->SetXY(73.5, 59.1);
+//  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_valid,'daytext'));
+//  				$pdf->MultiCell(80, 0, $out,0,'L');
 
-  				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(40, 136.9);
-  				$out = $outputlangs->convToOutputCharset(strip_tags($object->lines['0']->desc));
-  				$pdf->MultiCell(150, 16.5, $out,0,'L');
+// 				//Nom et adresse du destinataire
+//  				$out  = $object->thirdparty->name . "\r\n";
+//  				$out .= $object->thirdparty->address. "\r\n";
+//  				$out .= $object->thirdparty->zip . ' ' . $object->thirdparty->town ."\r\n";
+//  				$out .= 'Tel: ' . $object->thirdparty->phone . ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email;
 
-  				$pdf->SetFont('','', $default_font_size + 0.3);
-  				$pdf->SetXY(95.5, 154.05);
-  				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
-  				$pdf->writeHTML ($out);
+//  				$pdf->SetFont('','', $default_font_size);
+//   				$pdf->SetXY(55, 86.2);
+//   				$out = $outputlangs->convToOutputCharset($out);
+//   				$pdf->MultiCell(120, 0, $out,0,'L');
 
-  				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(126.7, 195.4);
-  				if(!empty($object->cond_reglement_id)){
-  					$text = $object->cond_reglement;
-  				}else{
-  					$text = '60 Jours fin de mois';
-  				}
-  				$out = $outputlangs->convToOutputCharset($text);
-  				$pdf->MultiCell(80, 0, $out,0,'L');
+//   				$pdf->SetFont('','', $default_font_size);
+//   				$pdf->SetXY(55, 115.7);
+//   				$out = $outputlangs->convToOutputCharset($this->emetteur->name);
+//   				$pdf->MultiCell(120, 0, $out,0,'L');
 
-				$pdf->Close();
+//   				$object->fetchObjectLinked();
+//   				if(!empty($object->linkedObjects['operationorder'])){
+//   					$operationorder = new OperationOrder($object->db);
+//   					$operationorder=array_values($object->linkedObjects['operationorder'])[0];
+//   					$operationorder->fetch_optionals();
+//   					if(!empty($operationorder->array_options['options_fk_dolifleet_vehicule'])){
+//   						$vehicule = new doliFleetVehicule($object->db);
+//   						$res = $vehicule->fetch($operationorder->array_options['options_fk_dolifleet_vehicule']);
+//   						if($res>0){
+//   							$dictVT = new dictionaryVehiculeType($object->db);
+//   							$dictVM = new dictionaryVehiculeMark($object->db);
+//   							$dictVM->fetch($vehicule->fk_vehicule_mark);
+//   							$dictVT->fetch($vehicule->fk_vehicule_type);
+//   							$pdf->SetFont('','', $default_font_size);
+//   							$pdf->SetXY(45.5, 124.1);
+//   							$text = $dictVT->label . ' ' . $dictVM->label. ' - VIN: ' . $vehicule->vin . ' - Immatriculation: ' . $vehicule->immatriculation;
+//   							$out = $outputlangs->convToOutputCharset($text);
+//   							$pdf->MultiCell(150, 0, $out,0,'L');
+//   						}
+//   					}
 
-				$pdf->Output($file,'F');
+//   				}
+//   				$pdf->SetFont('','', $default_font_size);
+//   				$pdf->SetXY(44, 128.6);
+//   				$out = $outputlangs->convToOutputCharset($object->ref);
+//   				$pdf->MultiCell(150, 0, $out,0,'L');
 
-				if (! empty($conf->global->MAIN_UMASK))
-				@chmod($file, octdec($conf->global->MAIN_UMASK));
+//   				$pdf->SetFont('','', $default_font_size);
+//   				$pdf->SetXY(40, 136.9);
+//   				$out = $outputlangs->convToOutputCharset(strip_tags($object->lines['0']->desc));
+//   				$pdf->MultiCell(150, 16.5, $out,0,'L');
 
-				return 1;
-			}
-			else
-			{
-				$this->error=$langs->trans("ErrorCanNotCreateDir",$dir);
-				return 0;
-			}
-		}
-		else
-		{
-			$this->error=$langs->trans("ErrorConstantNotDefined","SUPPLIERORDER_OUTPUTDIR");
-			return 0;
-		}
-		$this->error=$langs->trans("ErrorUnknown");
-		return 0;   // Erreur par defaut
+//   				$pdf->SetFont('','', $default_font_size + 0.3);
+//   				$pdf->SetXY(95.5, 154.05);
+//   				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
+//   				$pdf->writeHTML ($out);
+
+//   				$pdf->SetFont('','', $default_font_size);
+//   				$pdf->SetXY(126.7, 195.4);
+//   				if(!empty($object->cond_reglement_id)){
+//   					$text = $object->cond_reglement;
+//   				}else{
+//   					$text = '60 Jours fin de mois';
+//   				}
+//   				$out = $outputlangs->convToOutputCharset($text);
+//   				$pdf->MultiCell(80, 0, $out,0,'L');
+
+// 				$pdf->Close();
+
+// 				$pdf->Output($file,'F');
+
+// 				if (! empty($conf->global->MAIN_UMASK))
+// 				@chmod($file, octdec($conf->global->MAIN_UMASK));
+
+// 				return 1;
+// 			}
+// 			else
+// 			{
+// 				$this->error=$langs->trans("ErrorCanNotCreateDir",$dir);
+// 				return 0;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			$this->error=$langs->trans("ErrorConstantNotDefined","SUPPLIERORDER_OUTPUTDIR");
+// 			return 0;
+// 		}
+// 		$this->error=$langs->trans("ErrorUnknown");
+// 		return 0;   // Erreur par defaut
 	}
 }
 
