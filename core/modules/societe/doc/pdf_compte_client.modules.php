@@ -266,18 +266,18 @@ class pdf_compte_client
   				    
    				    $obj = $this->db->fetch_object($resql);
   				    
-//   				    $out = $obj->lastname. " ";
-//   				    $out .= $obj->firstname;
+   				    $out = $obj->lastname. " ";
+   				    $out .= $obj->firstname;
   				    
-//   				    $pdf->SetFont('','', $default_font_size+2);
-//   				    $pdf->SetXY(90, 115);
-//   				    $out = $outputlangs->convToOutputCharset($out);
-//   				    $pdf->MultiCell(120, 0, $out,0,'L');
+   				    $pdf->SetFont('','', $default_font_size+2);
+   				    $pdf->SetXY(90, 115);
+   				    $out = $outputlangs->convToOutputCharset($out);
+   				    $pdf->MultiCell(120, 0, $out,0,'L');
   				    
-//   				    $pdf->SetFont('','', $default_font_size+2);
-//   				    $pdf->SetXY(90, 123);
-//   				    $out = $outputlangs->convToOutputCharset($obj->poste);
-//   				    $pdf->MultiCell(120, 0, $out,0,'L');
+   				    $pdf->SetFont('','', $default_font_size+2);
+   				    $pdf->SetXY(90, 123);
+   				    $out = $outputlangs->convToOutputCharset($obj->poste);
+   				    $pdf->MultiCell(120, 0, $out,0,'L');
    				}
   				
   				
