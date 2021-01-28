@@ -254,32 +254,31 @@ class pdf_compte_client
   				$pdf->SetXY(90, 110);
   				$out = $outputlangs->convToOutputCharset($object->idprof4);
   				$pdf->MultiCell(120, 0, $out,0,'L');
-  				
-  				
+  				  				
   				
   				$sql = "SELECT t.lastname, t.firstname, t.civility, t.poste";
   				$sql .= " FROM ".MAIN_DB_PREFIX."socpeople as t";
   				$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "societe_contacts as c on t.rowid = c.fk_socpeople";
   				$sql .= " WHERE t.fk_soc = ".$object->id . " AND c.fk_c_type_contact = 1031113";
   				
-  				$resql=$this->db->query($sql);
-  				if($resql){
+//   				$resql=$this->db->query($sql);
+//   				if($resql){
   				    
-  				    $obj = $db->fetch_object($resql);
+//   				    $obj = $db->fetch_object($resql);
   				    
-  				    $out = $obj->lastname. " ";
-  				    $out .= $obj->firstname;
+//   				    $out = $obj->lastname. " ";
+//   				    $out .= $obj->firstname;
   				    
-  				    $pdf->SetFont('','', $default_font_size+2);
-  				    $pdf->SetXY(90, 115);
-  				    $out = $outputlangs->convToOutputCharset($out);
-  				    $pdf->MultiCell(120, 0, $out,0,'L');
+//   				    $pdf->SetFont('','', $default_font_size+2);
+//   				    $pdf->SetXY(90, 115);
+//   				    $out = $outputlangs->convToOutputCharset($out);
+//   				    $pdf->MultiCell(120, 0, $out,0,'L');
   				    
-  				    $pdf->SetFont('','', $default_font_size+2);
-  				    $pdf->SetXY(90, 123);
-  				    $out = $outputlangs->convToOutputCharset($obj->poste);
-  				    $pdf->MultiCell(120, 0, $out,0,'L');
-  				}
+//   				    $pdf->SetFont('','', $default_font_size+2);
+//   				    $pdf->SetXY(90, 123);
+//   				    $out = $outputlangs->convToOutputCharset($obj->poste);
+//   				    $pdf->MultiCell(120, 0, $out,0,'L');
+//   				}
   				
   				
 				$pdf->Close();
