@@ -34,7 +34,7 @@ require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_compte_client extends ModelePDFSuppliersOrders
+class pdf_compte_client //extends ModelePDFSuppliersOrders
 {
 	var $db;
 	var $name;
