@@ -207,10 +207,25 @@ class pdf_compte_client
 				$pdf->SetPage(1);
                 
 				$pdf->SetFont('','', $default_font_size+2);
-				$pdf->SetXY(142, 28);
+				$pdf->SetXY(142.5, 28);
 				$out = $extrafields->showOutputField("site",$object->array_options["options_site"]);
 				$out = $outputlangs->convToOutputCharset($out);
 				$pdf->MultiCell(50, 0, $out,0,'R');
+				
+				$pdf->SetFont('','', $default_font_size-2);
+				$pdf->SetXY(55, 42);
+				$out = $outputlangs->convToOutputCharset("Commercial");
+				$pdf->MultiCell(30, 0, $out,0,'L');
+				
+				$pdf->SetFont('','', $default_font_size-2);
+				$pdf->SetXY(105, 42);
+				$out = $outputlangs->convToOutputCharset($user->lastname . " " . $user->firstname);
+				$pdf->MultiCell(30, 0, $out,0,'L');
+				
+				$pdf->SetFont('','', $default_font_size-2);
+				$pdf->SetXY(142, 42);
+				$out = $outputlangs->convToOutputCharset(dol_print_date(dol_now()));
+				$pdf->MultiCell(40, 0, $out,0,'L');
 				
  				$pdf->SetFont('','', $default_font_size+2);
  				$pdf->SetXY(90, 45);
