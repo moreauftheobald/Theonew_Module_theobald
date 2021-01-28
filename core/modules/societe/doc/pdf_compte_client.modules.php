@@ -207,7 +207,7 @@ class pdf_compte_client
 				$pdf->SetPage(1);
                 
 				$pdf->SetFont('','', $default_font_size+2);
-				$pdf->SetXY(145, 30);
+				$pdf->SetXY(142, 28);
 				$out = $extrafields->showOutputField("site",$object->array_options["options_site"]);
 				$out = $outputlangs->convToOutputCharset($out);
 				$pdf->MultiCell(50, 0, $out,0,'R');
