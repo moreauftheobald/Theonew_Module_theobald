@@ -137,14 +137,14 @@ class pdf_compte_client extends ModelePDFSuppliersOrders
 			// Definition of $dir and $file
 			if ($object->specimen)
 			{
-				$dir = $conf->fournisseur->commande->dir_output;
+				$dir = $conf->societe->dir_output;
 				$file = $dir . "/SPECIMEN.pdf";
 			}
 			else
 			{
 				$objectref = dol_sanitizeFileName($object->ref);
-				$dir = $conf->fournisseur->commande->dir_output . "/" . $objectref;
-				$file = $dir . "/gop_" . $objectref . ".pdf";
+				$dir = $conf->societe->dir_output . "/" . $objectref;
+				$file = $dir . "/cpt_" . $objectref . ".pdf";
 			}
 
 			if (! file_exists($dir))
@@ -186,7 +186,7 @@ class pdf_compte_client extends ModelePDFSuppliersOrders
 				$pdf->SetMargins($this->marge_gauche, $this->marge_haute, $this->marge_droite);   // Left, Top, Right
 
 				// Add Pages from models
-				$infile= DOL_DATA_ROOT.'/clitheobald/modelpdf/gop.pdf';
+				$infile= DOL_DATA_ROOT.'/theobald/modelpdf/ouverture_cpt.pdf';
 				if (file_exists($infile) && is_readable($infile)) {
 					$pagecount = $pdf->setSourceFile($infile);
 					for($i = 1; $i <= $pagecount; $i ++) {
