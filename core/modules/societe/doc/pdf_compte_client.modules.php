@@ -130,7 +130,7 @@ class pdf_compte_client extends ModelePDFSuppliersOrders
 		$outputlangs->load("products");
 		$outputlangs->load("orders");
 
-		if ($conf->fournisseur->commande->dir_output)
+		if ($conf->societe->dir_output)
 		{
             $object->fetch_thirdparty();
 
