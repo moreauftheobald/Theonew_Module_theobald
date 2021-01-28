@@ -256,7 +256,8 @@ class pdf_compte_client
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$object->fetchObjectLinked();
-  				
+  				var_dump($object->linkedObjects);
+  				exit;
   				if(!empty($object->linkedObjects['operationorder'])){
   					
 
