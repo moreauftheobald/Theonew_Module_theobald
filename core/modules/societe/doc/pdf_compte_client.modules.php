@@ -219,12 +219,23 @@ class pdf_compte_client
   				$pdf->SetXY(90, 70);
   				$out = $outputlangs->convToOutputCharset($object->phone);
   				$pdf->MultiCell(120, 0, $out,0,'L');
-                 
-  				$out = ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email;
+  				
+  				$pdf->SetFont('','', $default_font_size+2);
+  				$pdf->SetXY(140, 70);
+  				$out = $outputlangs->convToOutputCharset($object->fax);
+  				$pdf->MultiCell(120, 0, $out,0,'L');
+                
+  				$pdf->SetFont('','', $default_font_size+2);
+  				$pdf->SetXY(90, 76);
+  				$out = $outputlangs->convToOutputCharset($object->email);
+  				$pdf->MultiCell(120, 0, $out,0,'L');
+  				
+  				var_dump($object);
+  				exit;
   				
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 115.7);
-  				$out = $outputlangs->convToOutputCharset($this->emetteur->name);
+  				$pdf->SetXY(90, 115.7);
+  				$out = $outputlangs->convToOutputCharset($object->tva_intra);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$object->fetchObjectLinked();
