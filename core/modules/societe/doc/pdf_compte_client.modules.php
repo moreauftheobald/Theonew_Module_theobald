@@ -203,12 +203,77 @@ class pdf_compte_client
 				
 				$pdf->SetPage(1);
 
- 				$pdf->SetFont('','', $default_font_size-1);
+ 				$pdf->SetFont('','', $default_font_size+1);
  				$pdf->SetXY(90, 45);
  				$out = $outputlangs->convToOutputCharset($object->name);
  				$pdf->MultiCell(100, 0, $out,0,'L');
-
 				
+ 				$out .= $object->address. "\r\n";
+ 				$out .= $object->zip . ' ' . $object->town ."\r\n";
+ 				$pdf->SetFont('','', $default_font_size+1);
+ 				$pdf->SetXY(90, 53);
+ 				$out = $outputlangs->convToOutputCharset($out);
+ 				$pdf->MultiCell(100, 0, $out,0,'L');
+ 				
+ 				$out .= 'Tel: ' . $object->thirdparty->phone . ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email;
+
+ 				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(55, 86.2);
+  				$out = $outputlangs->convToOutputCharset($out);
+  				$pdf->MultiCell(120, 0, $out,0,'L');
+
+  				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(55, 115.7);
+  				$out = $outputlangs->convToOutputCharset($this->emetteur->name);
+  				$pdf->MultiCell(120, 0, $out,0,'L');
+
+  				$object->fetchObjectLinked();
+  				if(!empty($object->linkedObjects['operationorder'])){
+  					$operationorder = new OperationOrder($object->db);
+  					$operationorder=array_values($object->linkedObjects['operationorder'])[0];
+  					$operationorder->fetch_optionals();
+  					if(!empty($operationorder->array_options['options_fk_dolifleet_vehicule'])){
+  						$vehicule = new doliFleetVehicule($object->db);
+  						$res = $vehicule->fetch($operationorder->array_options['options_fk_dolifleet_vehicule']);
+  						if($res>0){
+  							$dictVT = new dictionaryVehiculeType($object->db);
+  							$dictVM = new dictionaryVehiculeMark($object->db);
+  							$dictVM->fetch($vehicule->fk_vehicule_mark);
+  							$dictVT->fetch($vehicule->fk_vehicule_type);
+  							$pdf->SetFont('','', $default_font_size);
+  							$pdf->SetXY(45.5, 124.1);
+  							$text = $dictVT->label . ' ' . $dictVM->label. ' - VIN: ' . $vehicule->vin . ' - Immatriculation: ' . $vehicule->immatriculation;
+  							$out = $outputlangs->convToOutputCharset($text);
+  							$pdf->MultiCell(150, 0, $out,0,'L');
+  						}
+  					}
+
+  				}
+  				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(44, 128.6);
+  				$out = $outputlangs->convToOutputCharset($object->ref);
+  				$pdf->MultiCell(150, 0, $out,0,'L');
+
+  				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(40, 136.9);
+  				$out = $outputlangs->convToOutputCharset(strip_tags($object->lines['0']->desc));
+  				$pdf->MultiCell(150, 16.5, $out,0,'L');
+
+  				$pdf->SetFont('','', $default_font_size + 0.3);
+  				$pdf->SetXY(95.5, 154.05);
+  				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
+  				$pdf->writeHTML ($out);
+
+  				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(126.7, 195.4);
+  				if(!empty($object->cond_reglement_id)){
+  					$text = $object->cond_reglement;
+  				}else{
+  					$text = '60 Jours fin de mois';
+  				}
+  				$out = $outputlangs->convToOutputCharset($text);
+  				$pdf->MultiCell(80, 0, $out,0,'L');
+
 				$pdf->Close();
 
 				$pdf->Output($file,'F');
