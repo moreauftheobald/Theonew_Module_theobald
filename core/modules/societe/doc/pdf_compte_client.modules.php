@@ -118,7 +118,9 @@ class pdf_compte_client
 	function write_file($object,$outputlangs,$srctemplatepath='',$hidedetails=0,$hidedesc=0,$hideref=0)
 	{
 		global $user,$langs,$conf,$hookmanager,$mysoc;
-
+		$extrafields = new ExtraFields($db);
+		$extrafields->fetch_name_optionals_label($object->table_element);
+		
 		if (! is_object($outputlangs)) $outputlangs=$langs;
 		// For backward compatibility with FPDF, force output charset to ISO, because FPDF expect text to be encoded in ISO
 		if (! empty($conf->global->MAIN_USE_FPDF)) $outputlangs->charset_output='ISO-8859-1';
@@ -202,7 +204,13 @@ class pdf_compte_client
 				}
 				
 				$pdf->SetPage(1);
-
+                
+				$pdf->SetFont('','', $default_font_size+2);
+				$pdf->SetXY(140, 20);
+				$out = $extrafields->showOutputField("options_site",$object->array_options["options_site"]);
+				$out = $outputlangs->convToOutputCharset($out);
+				$pdf->MultiCell(50, 0, $out,0,'R');
+				
  				$pdf->SetFont('','', $default_font_size+2);
  				$pdf->SetXY(90, 45);
  				$out = $outputlangs->convToOutputCharset($object->name);
@@ -270,7 +278,7 @@ class pdf_compte_client
    				    $out .= $obj->firstname;
   				    
    				    $pdf->SetFont('','', $default_font_size+2);
-   				    $pdf->SetXY(90, 115);
+   				    $pdf->SetXY(90, 117);
    				    $out = $outputlangs->convToOutputCharset($out);
    				    $pdf->MultiCell(120, 0, $out,0,'L');
   				    
