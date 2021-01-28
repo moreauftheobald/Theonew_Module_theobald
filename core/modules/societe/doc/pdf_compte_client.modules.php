@@ -231,7 +231,7 @@ class pdf_compte_client
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(90, 82);
+  				$pdf->SetXY(90, 84);
   				$out = $outputlangs->convToOutputCharset($object->forme_juridique);
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
@@ -246,7 +246,7 @@ class pdf_compte_client
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$pdf->SetFont('','', $default_font_size+2);
-  				$pdf->SetXY(90, 102);
+  				$pdf->SetXY(90, 103);
   				$out = $outputlangs->convToOutputCharset($object->idprof1);
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
@@ -256,6 +256,7 @@ class pdf_compte_client
   				$pdf->MultiCell(120, 0, $out,0,'L');
   				
   				$object->fetchObjectLinked();
+  				
   				if(!empty($object->linkedObjects['operationorder'])){
   					
 
