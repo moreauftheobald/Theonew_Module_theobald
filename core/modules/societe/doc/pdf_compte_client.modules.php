@@ -119,7 +119,7 @@ class pdf_compte_client
 	function write_file($object,$outputlangs,$srctemplatepath='',$hidedetails=0,$hidedesc=0,$hideref=0)
 	{
 		global $user,$langs,$conf,$hookmanager,$mysoc;
-		$extrafields = new ExtraFields($db);
+		$extrafields = new ExtraFields($this->db);
 		$extrafields->fetch_name_optionals_label($object->table_element);
 		
 		if (! is_object($outputlangs)) $outputlangs=$langs;
