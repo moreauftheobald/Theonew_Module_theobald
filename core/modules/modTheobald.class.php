@@ -113,7 +113,8 @@ class modtHEOBALD extends DolibarrModules
         );
         // Data directories to create when module is enabled.
         // Example: this->dirs = array("/theobald/temp","/theobald/subdir");
-        $this->dirs = array("/theobald/temp");
+        $this->dirs = array('/theobald',
+            '/theobald/modelpdf');
         // Config pages. Put here list of php page, stored into theobald/admin directory, to use to setup module.
         $this->config_page_url = array("setup.php@theobald");
         // Dependencies
@@ -406,6 +407,12 @@ class modtHEOBALD extends DolibarrModules
         $this->remove($options);
 
         $sql = array();
+        
+        require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
+        $resultFile = dol_copy(dol_buildpath('/theobald/core/doctemplate/OUVERTURE_CPT.pdf'),
+            DOL_DATA_ROOT.'/theobald/modelpdf/ouverture_cpt.pdf',
+            0,
+            0);
 
         // ODT template
         /*
