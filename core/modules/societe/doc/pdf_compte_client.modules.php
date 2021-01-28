@@ -213,17 +213,17 @@ class pdf_compte_client
 				$pdf->MultiCell(50, 0, $out,0,'R');
 				
 				$pdf->SetFont('','', $default_font_size-2);
-				$pdf->SetXY(55, 42);
+				$pdf->SetXY(50, 38);
 				$out = $outputlangs->convToOutputCharset("Commercial");
 				$pdf->MultiCell(30, 0, $out,0,'L');
 				
 				$pdf->SetFont('','', $default_font_size-2);
-				$pdf->SetXY(105, 42);
+				$pdf->SetXY(105, 38);
 				$out = $outputlangs->convToOutputCharset($user->lastname . " " . $user->firstname);
 				$pdf->MultiCell(30, 0, $out,0,'L');
 				
 				$pdf->SetFont('','', $default_font_size-2);
-				$pdf->SetXY(142, 42);
+				$pdf->SetXY(143, 38);
 				$out = $outputlangs->convToOutputCharset(dol_print_date(dol_now()));
 				$pdf->MultiCell(40, 0, $out,0,'L');
 				
