@@ -218,12 +218,12 @@ class pdf_compte_client
 				$pdf->MultiCell(30, 0, $out,0,'L');
 				
 				$pdf->SetFont('','', $default_font_size-2);
-				$pdf->SetXY(105, 38);
+				$pdf->SetXY(105, 39);
 				$out = $outputlangs->convToOutputCharset($user->lastname . " " . $user->firstname);
 				$pdf->MultiCell(30, 0, $out,0,'L');
 				
 				$pdf->SetFont('','', $default_font_size-2);
-				$pdf->SetXY(143, 38);
+				$pdf->SetXY(143, 39);
 				$out = $outputlangs->convToOutputCharset(dol_print_date(dol_now()));
 				$pdf->MultiCell(40, 0, $out,0,'L');
 				
