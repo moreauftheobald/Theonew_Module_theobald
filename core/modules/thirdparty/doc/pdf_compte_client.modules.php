@@ -27,27 +27,21 @@
  *	\ingroup    ficheinter
  *	\brief      Strato contracts template class file
  */
-require_once DOL_DOCUMENT_ROOT.'/core/modules/supplier_order/modules_commandefournisseur.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/company.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/pdf.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
-require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
-dol_include_once('dolifleet/class/vehicule.class.php');
-dol_include_once('operationorder/class/operationorder.class.php');
-dol_include_once('dolifleet/class/dictionaryVehiculeType.class.php');
-dol_include_once('dolifleet/class/dictionaryVehiculeMark.class.php');
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_gop extends ModelePDFSuppliersOrders
+class pdf_compte_client extends ModelePDFSuppliersOrders
 {
 	var $db;
 	var $name;
 	var $description;
 	var $type;
 
-	var $phpmin = array(4,3,0); // Minimum version of PHP required by module
+	var $phpmin = array(5,5,0); // Minimum version of PHP required by module
 	var $version = 'dolibarr';
 
 	var $page_largeur;
@@ -80,8 +74,8 @@ class pdf_gop extends ModelePDFSuppliersOrders
 		global $conf,$langs,$mysoc;
 
 		$this->db = $db;
-		$this->name = 'gop';
-		$this->description = "garantie de paiement";
+		$this->name = 'Open_CPT';
+		$this->description = "Ouverture de compte Client";
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
