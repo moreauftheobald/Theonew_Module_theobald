@@ -395,9 +395,9 @@ class modtHEOBALD extends DolibarrModules
         if ($result < 0) return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
 
         // Create extrafields during init
-        //include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-        //$extrafields = new ExtraFields($this->db);
-        //$result1=$extrafields->addExtraField('myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
+        include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
+        $extrafields = new ExtraFields($this->db);
+        $result1=$extrafields->addExtraField('site', "Site de ratachement", 'select', 1,  '', 'thirdparty',   0, 0, 0, unserialize('a:1:{s:7:"options";a:5:{i:1;s:6:"Ludres";i:2;s:9:"St Nabord";i:3;s:6:"Ennery";i:4;s:4:"Yutz";i:5;s:13:"Sarreguemines";}}'), 0, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
         //$result2=$extrafields->addExtraField('myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
         //$result3=$extrafields->addExtraField('myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
         //$result4=$extrafields->addExtraField('myattr4', "New Attr 4 label", 'select',  1,  3, 'thirdparty',   0, 1, '', array('options'=>array('code1'=>'Val1','code2'=>'Val2','code3'=>'Val3')), 1,'', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
