@@ -203,25 +203,25 @@ class pdf_compte_client
 				
 				$pdf->SetPage(1);
 
- 				$pdf->SetFont('','', $default_font_size+1);
+ 				$pdf->SetFont('','', $default_font_size+2);
  				$pdf->SetXY(90, 45);
  				$out = $outputlangs->convToOutputCharset($object->name);
  				$pdf->MultiCell(100, 0, $out,0,'L');
 				
- 				$out .= $object->address. "\r\n";
+ 				$out = $object->address. "\r\n";
  				$out .= $object->zip . ' ' . $object->town ."\r\n";
- 				$pdf->SetFont('','', $default_font_size+1);
+ 				$pdf->SetFont('','', $default_font_size+2);
  				$pdf->SetXY(90, 53);
  				$out = $outputlangs->convToOutputCharset($out);
  				$pdf->MultiCell(100, 0, $out,0,'L');
  				
- 				$out .= 'Tel: ' . $object->thirdparty->phone . ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email;
-
- 				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 86.2);
-  				$out = $outputlangs->convToOutputCharset($out);
+ 				$pdf->SetFont('','', $default_font_size+2);
+  				$pdf->SetXY(90, 70);
+  				$out = $outputlangs->convToOutputCharset($object->phone);
   				$pdf->MultiCell(120, 0, $out,0,'L');
-
+                 
+  				$out = ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email;
+  				
   				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(55, 115.7);
   				$out = $outputlangs->convToOutputCharset($this->emetteur->name);
