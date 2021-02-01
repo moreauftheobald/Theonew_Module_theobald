@@ -186,7 +186,7 @@ class modtHEOBALD extends DolibarrModules
         $this->dictionaries=array(
             'langs'=>'theobald@theobald',
             // List of tables we want to see into dictonnary editor
-            'tabname'=>array(MAIN_DB_PREFIX."_c_pdv"),
+            'tabname'=>array(MAIN_DB_PREFIX."c_pdv"),
             // Label of tables
             'tablib'=>array("Points de vente"),
             // Request to select fields
