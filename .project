@@ -3,9 +3,16 @@
 	<name>Theonew_Module_theobald</name>
 	<comment></comment>
 	<projects>
+		<project>dolibarr</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>
 	<natures>
 	</natures>
+	<variableList>
+		<variable>
+			<name>Dolibarr</name>
+			<value>file:/C:/Projets%20Eclipse/Theonew/Theonew_Module_theobald/dolibarr</value>
+		</variable>
+	</variableList>
 </projectDescription>
