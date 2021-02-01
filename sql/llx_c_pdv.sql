@@ -14,7 +14,7 @@
 -- along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-CREATE TABLE llx_mymodule_myobject(
+CREATE TABLE llx_c_pdv(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid INTEGER AUTO_INCREMENT PRIMARY KEY,
 	entity INTEGER DEFAULT 1 NOT NULL,
