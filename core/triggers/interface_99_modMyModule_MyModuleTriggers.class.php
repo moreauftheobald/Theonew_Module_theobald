@@ -124,7 +124,10 @@ class InterfaceMyModuleTriggers extends DolibarrTriggers
 
             // Companies
             //case 'COMPANY_CREATE':
-            //case 'COMPANY_MODIFY':
+            case 'COMPANY_MODIFY':
+                var_dump($object->array_options);
+                exit;
+                
             //case 'COMPANY_DELETE':
 
             // Contacts
