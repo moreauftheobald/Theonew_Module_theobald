@@ -190,15 +190,15 @@ class modtHEOBALD extends DolibarrModules
             // Label of tables
             'tablib'=>array("Points de vente"),
             // Request to select fields
-            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'c_pdv as f'),
+            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label FROM '.MAIN_DB_PREFIX.'c_pdv as f'),
             // Sort order
             'tabsqlsort'=>array("label ASC"),
             // List of fields (result of select to show dictionary)
-            'tabfield'=>array("code,label,active"),
+            'tabfield'=>array("code,label"),
             // List of fields (list of fields to edit a record)
-            'tabfieldvalue'=>array("code,label,active"),
+            'tabfieldvalue'=>array("code,label"),
             // List of fields (list of fields for insert)
-            'tabfieldinsert'=>array("code,label,active"),
+            'tabfieldinsert'=>array("code,label"),
             // Name of columns with primary key (try to always name it 'rowid')
             'tabrowid'=>array("rowid"),
             // Condition to show each dictionary
