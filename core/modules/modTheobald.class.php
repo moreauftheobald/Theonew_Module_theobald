@@ -397,8 +397,8 @@ class modtHEOBALD extends DolibarrModules
         include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
         $extrafields = new ExtraFields($this->db);
         $result1=$extrafields->addExtraField('site', "Site de ratachement", 'sellist', 1,  1, 'thirdparty',   0, 1, 1, unserialize('a:1:{s:7:"options";a:1:{s:27:"c_pdv:label:rowid::active=1";N;}}'), 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
-        $result1=$extrafields->addExtraField('gdscom', "Compte GDS Commercial", 'varchar', 2,  255, 'thirdparty',   0, 1, 1,'' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
-        $result1=$extrafields->addExtraField('gdsapv', "Compte GDS Apres Vente", 'varchar', 3,  255, 'thirdparty',   0, 1, 1,'' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
+        $result1=$extrafields->addExtraField('gdscom', "Compte GDS Commercial", 'varchar', 2,  255, 'thirdparty',   1, 0, 1,'' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
+        $result1=$extrafields->addExtraField('gdsapv', "Compte GDS Apres Vente", 'varchar', 3,  255, 'thirdparty',   1, 0, 1,'' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
         //$result2=$extrafields->addExtraField('myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
         //$result3=$extrafields->addExtraField('myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
         //$result4=$extrafields->addExtraField('myattr4', "New Attr 4 label", 'select',  1,  3, 'thirdparty',   0, 1, '', array('options'=>array('code1'=>'Val1','code2'=>'Val2','code3'=>'Val3')), 1,'', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
