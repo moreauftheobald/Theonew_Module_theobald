@@ -30,3 +30,4 @@
 --insert into llx_c_action_trigger (code,label,description,elementtype,rang) values ('MYOBJECT_UNVALIDATE','MyObject unvalidated','Executed when myobject is unvalidated', 'mymodule', 1001);
 --insert into llx_c_action_trigger (code,label,description,elementtype,rang) values ('MYOBJECT_DELETE','MyObject deleted','Executed when myobject deleted', 'mymodule', 1004);
 
+INSERT INTO llx_c_pdv (rowid,entity,code,label,active) VALUES (1,1,'LUD','Ludres',true), (2,1,'YTZ','Yutz',true),(3,1,'ENN','Ennery',true),(4,1,'SRG','Sarreguemines',true),(5,1,'STN','Saint Nabord',true);

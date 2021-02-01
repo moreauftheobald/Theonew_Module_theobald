@@ -181,30 +181,29 @@ class modtHEOBALD extends DolibarrModules
         // 'user'             to add a tab in user view
 
         // Dictionaries
-        $this->dictionaries = array();
-        /* Example:
+        //$this->dictionaries = array();
+        // Example:
         $this->dictionaries=array(
             'langs'=>'theobald@theobald',
             // List of tables we want to see into dictonnary editor
-            'tabname'=>array(MAIN_DB_PREFIX."table1", MAIN_DB_PREFIX."table2", MAIN_DB_PREFIX."table3"),
+            'tabname'=>array(MAIN_DB_PREFIX."_c_pdv"),
             // Label of tables
-            'tablib'=>array("Table1", "Table2", "Table3"),
+            'tablib'=>array("Points de vente"),
             // Request to select fields
-            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'table1 as f', 'SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'table2 as f', 'SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'table3 as f'),
+            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'_c_pdv as f'),
             // Sort order
-            'tabsqlsort'=>array("label ASC", "label ASC", "label ASC"),
+            'tabsqlsort'=>array("label ASC"),
             // List of fields (result of select to show dictionary)
-            'tabfield'=>array("code,label", "code,label", "code,label"),
+            'tabfield'=>array("code,label,active"),
             // List of fields (list of fields to edit a record)
-            'tabfieldvalue'=>array("code,label", "code,label", "code,label"),
+            'tabfieldvalue'=>array("code,label,active"),
             // List of fields (list of fields for insert)
-            'tabfieldinsert'=>array("code,label", "code,label", "code,label"),
+            'tabfieldinsert'=>array("code,label,active"),
             // Name of columns with primary key (try to always name it 'rowid')
-            'tabrowid'=>array("rowid", "rowid", "rowid"),
+            'tabrowid'=>array("rowid"),
             // Condition to show each dictionary
-            'tabcond'=>array($conf->theobald->enabled, $conf->theobald->enabled, $conf->theobald->enabled)
+            'tabcond'=>array($conf->theobald->enabled)
         );
-        */
 
         // Boxes/Widgets
         // Add here list of php file(s) stored in theobald/core/boxes that contains a class to show a widget.
