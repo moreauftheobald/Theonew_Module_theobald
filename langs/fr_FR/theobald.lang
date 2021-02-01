@@ -21,6 +21,10 @@
 ModuleMyModuleName = Mon module
 # Module description 'ModuleMyModuleDesc'
 ModuleMyModuleDesc = Description de MyModule
+Won = Gagnee
+Pending = Suspendue
+Lost = Perdue
+
 
 #
 # Page d'administration
@@ -46,3 +50,7 @@ MyPageName = Nom de ma page
 #
 MyWidget = Mon widget
 MyWidgetDescription = Description de mon widget
+
+#
+# Liste d'affaire
+#
