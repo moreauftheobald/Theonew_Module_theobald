@@ -101,7 +101,8 @@ class InterfaceMyModuleTriggers extends DolibarrTriggers
 
         // Put here code you want to execute when a Dolibarr business events occurs.
         // Data and type of action are stored into $object and $action
-
+        var_dump($action);
+        exit;
         switch ($action) {
             // Users
             //case 'USER_CREATE':
