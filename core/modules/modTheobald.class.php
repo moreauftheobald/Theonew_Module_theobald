@@ -190,7 +190,7 @@ class modtHEOBALD extends DolibarrModules
             // Label of tables
             'tablib'=>array("Points de vente"),
             // Request to select fields
-            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'_c_pdv as f'),
+            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'c_pdv as f'),
             // Sort order
             'tabsqlsort'=>array("label ASC"),
             // List of fields (result of select to show dictionary)
