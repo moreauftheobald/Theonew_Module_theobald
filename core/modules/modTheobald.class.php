@@ -1,5 +1,6 @@
 <?php
-/* Copyright (C) 2004-2018  Laurent Destailleur     <eldy@users.sourceforge.net>
+/**
+ *  Copyright (C) 2004-2018  Laurent Destailleur     <eldy@users.sourceforge.net>
  * Copyright (C) 2018-2019  Nicolas ZABOURI         <info@inovea-conseil.com>
  * Copyright (C) 2019       Frédéric France         <frederic.france@netlogic.fr>
  * Copyright (C) ---Put here your own copyright and developer email---
@@ -26,12 +27,13 @@
  *  \ingroup    theobald
  *  \brief      Description and activation file for module theobald
  */
+
 include_once DOL_DOCUMENT_ROOT.'/core/modules/DolibarrModules.class.php';
 
 /**
  *  Description and activation class for module theobald
  */
-class modtHEOBALD extends DolibarrModules
+class modTheobald extends DolibarrModules
 {
     /**
      * Constructor. Define names, constants, directories, boxes, permissions
@@ -40,12 +42,12 @@ class modtHEOBALD extends DolibarrModules
      */
     public function __construct($db)
     {
-        global $langs, $conf;
+        global $conf;
         $this->db = $db;
 
         // Id for module (must be unique).
         // Use here a free id (See in Home -> System information -> Dolibarr for list of used modules id).
-        $this->numero = 547130; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
+        $this->numero = 547130; 
         // Key text used to identify module (for permissions, menus, etc...)
         $this->rights_class = 'theobald';
         // Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
@@ -114,7 +116,7 @@ class modtHEOBALD extends DolibarrModules
         // Data directories to create when module is enabled.
         // Example: this->dirs = array("/theobald/temp","/theobald/subdir");
         $this->dirs = array('/theobald',
-            '/theobald/modelpdf');
+                            '/theobald/modelpdf');
         // Config pages. Put here list of php page, stored into theobald/admin directory, to use to setup module.
         $this->config_page_url = array("setup.php@theobald");
         // Dependencies
@@ -129,9 +131,7 @@ class modtHEOBALD extends DolibarrModules
         $this->need_dolibarr_version = array(11, -3); // Minimum version of Dolibarr required by module
         $this->warnings_activation = array(); // Warning to show when we activate module. array('always'='text') or array('FR'='textfr','ES'='textes'...)
         $this->warnings_activation_ext = array(); // Warning to show when we activate an external module. array('always'='text') or array('FR'='textfr','ES'='textes'...)
-        //$this->automatic_activation = array('FR'=>'theobaldWasAutomaticallyActivatedBecauseOfYourCountryChoice');
-        //$this->always_enabled = true;								// If true, can't be disabled
-
+        
         // Constants
         // List of particular constants to add when module is enabled (key, 'chaine', value, desc, visible, 'current' or 'allentities', deleteonunactive)
         // Example: $this->const=array(1 => array('theobald_MYNEWCONST1', 'chaine', 'myvalue', 'This is a constant to add', 1),
@@ -140,13 +140,6 @@ class modtHEOBALD extends DolibarrModules
         $this->const = array(
             // 1 => array('theobald_MYCONSTANT', 'chaine', 'avalue', 'This is a constant to add', 1, 'allentities', 1)
         );
-
-        // Some keys to add into the overwriting translation tables
-        /*$this->overwrite_translation = array(
-            'en_US:ParentCompany'=>'Parent company or reseller',
-            'fr_FR:ParentCompany'=>'Maison mère ou revendeur'
-        )*/
-
         if (!isset($conf->theobald) || !isset($conf->theobald->enabled)) {
             $conf->theobald = new stdClass();
             $conf->theobald->enabled = 0;
@@ -186,23 +179,25 @@ class modtHEOBALD extends DolibarrModules
         $this->dictionaries=array(
             'langs'=>'theobald@theobald',
             // List of tables we want to see into dictonnary editor
-            'tabname'=>array(MAIN_DB_PREFIX."c_pdv"),
+            'tabname'=>array(MAIN_DB_PREFIX."c_pdv",MAIN_DB_PREFIX."c_gamme"),
             // Label of tables
-            'tablib'=>array("Points de vente"),
+            'tablib'=>array("Points de vente","Gammes"),
             // Request to select fields
-            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label,f.active FROM '.MAIN_DB_PREFIX.'c_pdv as f'),
+            'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label,f.active FROM '.MAIN_DB_PREFIX.'c_pdv as f',
+                            'SELECT f.rowid as rowid, f.code, f.label,f.active FROM '.MAIN_DB_PREFIX.'c_gamme as f',
+            ),
             // Sort order
-            'tabsqlsort'=>array("label ASC"),
+            'tabsqlsort'=>array("label ASC","label ASC"),
             // List of fields (result of select to show dictionary)
-            'tabfield'=>array("code,label"),
+            'tabfield'=>array("code,label","code,label"),
             // List of fields (list of fields to edit a record)
-            'tabfieldvalue'=>array("code,label"),
+            'tabfieldvalue'=>array("code,label","code,label"),
             // List of fields (list of fields for insert)
-            'tabfieldinsert'=>array("code,label"),
+            'tabfieldinsert'=>array("code,label","code,label"),
             // Name of columns with primary key (try to always name it 'rowid')
-            'tabrowid'=>array("rowid"),
+            'tabrowid'=>array("rowid","rowid"),
             // Condition to show each dictionary
-            'tabcond'=>array($conf->theobald->enabled)
+            'tabcond'=>array($conf->theobald->enabled,$conf->theobald->enabled)
         );
 
         // Boxes/Widgets
@@ -234,10 +229,7 @@ class modtHEOBALD extends DolibarrModules
             //      'priority' => 50,
             //  ),
         );
-        // Example: $this->cronjobs=array(
-        //    0=>array('label'=>'My label', 'jobtype'=>'method', 'class'=>'/dir/class/file.class.php', 'objectname'=>'MyClass', 'method'=>'myMethod', 'parameters'=>'param1, param2', 'comment'=>'Comment', 'frequency'=>2, 'unitfrequency'=>3600, 'status'=>0, 'test'=>'$conf->theobald->enabled', 'priority'=>50),
-        //    1=>array('label'=>'My label', 'jobtype'=>'command', 'command'=>'', 'parameters'=>'param1, param2', 'comment'=>'Comment', 'frequency'=>1, 'unitfrequency'=>3600*24, 'status'=>0, 'test'=>'$conf->theobald->enabled', 'priority'=>50)
-        // );
+        
 
         // Permissions provided by this module
         $this->rights = array();
@@ -245,18 +237,23 @@ class modtHEOBALD extends DolibarrModules
         // Add here entries to declare new permissions
         /* BEGIN MODULEBUILDER PERMISSIONS */
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Read objects of theobald'; // Permission label
-        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
+        $this->rights[$r][1] = 'Lire les affaires'; // Permission label
+        $this->rights[$r][4] = 'affaires'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $r++;
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Create/Update objects of theobald'; // Permission label
-        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
+        $this->rights[$r][1] = 'Creer ses affaires'; // Permission label
+        $this->rights[$r][4] = 'affaires'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
+        $this->rights[$r][5] = 'write_own'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
+        $r++;
+        $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
+        $this->rights[$r][1] = 'Creer des affaires'; // Permission label
+        $this->rights[$r][4] = 'affaires'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $r++;
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Delete objects of theobald'; // Permission label
-        $this->rights[$r][4] = 'myobject'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
+        $this->rights[$r][1] = 'Supprimer des affaires'; // Permission label
+        $this->rights[$r][4] = 'affaires'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $r++;
         /* END MODULEBUILDER PERMISSIONS */
@@ -281,36 +278,36 @@ class modtHEOBALD extends DolibarrModules
         //    'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
         //);
         /* END MODULEBUILDER TOPMENU */
-        /* BEGIN MODULEBUILDER LEFTMENU MYOBJECT
+        //BEGIN MODULEBUILDER LEFTMENU MYOBJECT
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=theobald',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=commercial',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',                          // This is a Top menu entry
-            'titre'=>'MyObject',
-            'mainmenu'=>'theobald',
-            'leftmenu'=>'myobject',
-            'url'=>'/theobald/theobaldindex.php',
+            'titre'=>'Affaires',
+            'mainmenu'=>'commercial',
+            'leftmenu'=>'affaires',
+            'url'=>'/theobald/business/index.php',
             'langs'=>'theobald@theobald',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>1000+$r,
             'enabled'=>'$conf->theobald->enabled',  // Define condition to show or hide menu entry. Use '$conf->theobald->enabled' if entry must be visible if module is enabled.
-            'perms'=>'$user->rights->theobald->myobject->read',			                // Use 'perms'=>'$user->rights->theobald->level1->level2' if you want your menu with a permission rules
+            'perms'=>1,			                // Use 'perms'=>'$user->rights->theobald->level1->level2' if you want your menu with a permission rules
             'target'=>'',
-            'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>0,				                // 0=Menu for internal users, 1=external users, 2=both
         );
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=theobald,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=commercial,fk_leftmenu=affaires',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
-            'titre'=>'List MyObject',
-            'mainmenu'=>'theobald',
-            'leftmenu'=>'theobald_myobject_list',
-            'url'=>'/theobald/myobject_list.php',
+            'titre'=>'Liste des affaires',
+            'mainmenu'=>'commercial',
+            'leftmenu'=>'affaires_list',
+            'url'=>'/theobald/business/affaire.php',
             'langs'=>'theobald@theobald',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>1000+$r,
             'enabled'=>'$conf->theobald->enabled',  // Define condition to show or hide menu entry. Use '$conf->theobald->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'perms'=>'$user->rights->theobald->myobject->read',			                // Use 'perms'=>'$user->rights->theobald->level1->level2' if you want your menu with a permission rules
+            'perms'=>1,			                // Use 'perms'=>'$user->rights->theobald->level1->level2' if you want your menu with a permission rules
             'target'=>'',
-            'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>0,				                // 0=Menu for internal users, 1=external users, 2=both
         );
-        $this->menu[$r++]=array(
+        /*$this->menu[$r++]=array(
             'fk_menu'=>'fk_mainmenu=theobald,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'New MyObject',
@@ -388,17 +385,25 @@ class modtHEOBALD extends DolibarrModules
      */
     public function init($options = '')
     {
-        global $conf, $langs;
+        $sql = array();
+        
+        define('INC_FROM_DOLIBARR', true);
+        
+        require dol_buildpath('/theobald/script/create-maj-base.php');
+        
+        $result=$this->_load_tables('/theobald/sql/');
 
-        $result = $this->_load_tables('/theobald/sql/');
         if ($result < 0) return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
 
         // Create extrafields during init
         include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
         $extrafields = new ExtraFields($this->db);
-        $result1=$extrafields->addExtraField('site', "Site de ratachement", 'sellist', 1,  1, 'thirdparty',   0, 1, 1, unserialize('a:1:{s:7:"options";a:1:{s:27:"c_pdv:label:rowid::active=1";N;}}'), 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
-        $result1=$extrafields->addExtraField('gdscom', "Compte GDS Commercial", 'varchar', 2,  255, 'thirdparty',   1, 0, '','' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
-        $result1=$extrafields->addExtraField('gdsapv', "Compte GDS Apres Vente", 'varchar', 3,  255, 'thirdparty',   1, 0, '','' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
+        $result=$extrafields->addExtraField('site', "Site de ratachement", 'sellist', 1,  1, 'thirdparty',   0, 1, 1, unserialize('a:1:{s:7:"options";a:1:{s:27:"c_pdv:label:rowid::active=1";N;}}'), 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
+        if ($result < 0) return -1; 
+        $result=$extrafields->addExtraField('gdscom', "Compte GDS Commercial", 'varchar', 2,  255, 'thirdparty',   1, 0, '','' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
+        if ($result < 0) return -1; 
+        $result=$extrafields->addExtraField('gdsapv', "Compte GDS Apres Vente", 'varchar', 3,  255, 'thirdparty',   1, 0, '','' , 1, '', 1, '', '', 0, 'theobald@theobald', '$conf->theobald->enabled');
+        if ($result < 0) return -1; 
         //$result2=$extrafields->addExtraField('myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
         //$result3=$extrafields->addExtraField('myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
         //$result4=$extrafields->addExtraField('myattr4', "New Attr 4 label", 'select',  1,  3, 'thirdparty',   0, 1, '', array('options'=>array('code1'=>'Val1','code2'=>'Val2','code3'=>'Val3')), 1,'', 0, 0, '', '', 'theobald@theobald', '$conf->theobald->enabled');
@@ -407,38 +412,12 @@ class modtHEOBALD extends DolibarrModules
         // Permissions
         $this->remove($options);
 
-        $sql = array();
+        
         
         require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
-        $resultFile = dol_copy(dol_buildpath('/theobald/core/doctemplate/OUVERTURE_CPT.pdf'),
-            DOL_DATA_ROOT.'/theobald/modelpdf/ouverture_cpt.pdf',
-            0,
-            0);
-
-        // ODT template
-        /*
-        $src=DOL_DOCUMENT_ROOT.'/install/doctemplates/theobald/template_myobjects.odt';
-        $dirodt=DOL_DATA_ROOT.'/doctemplates/theobald';
-        $dest=$dirodt.'/template_myobjects.odt';
-
-        if (file_exists($src) && ! file_exists($dest))
-        {
-            require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
-            dol_mkdir($dirodt);
-            $result=dol_copy($src, $dest, 0, 0);
-            if ($result < 0)
-            {
-                $langs->load("errors");
-                $this->error=$langs->trans('ErrorFailToCopyFile', $src, $dest);
-                return 0;
-            }
-        }
-
-        $sql = array(
-            "DELETE FROM ".MAIN_DB_PREFIX."document_model WHERE nom = '".$this->db->escape($this->const[0][2])."' AND type = 'theobald' AND entity = ".$conf->entity,
-            "INSERT INTO ".MAIN_DB_PREFIX."document_model (nom, type, entity) VALUES('".$this->db->escape($this->const[0][2])."','theobald',".$conf->entity.")"
-        );
-        */
+        $result=dol_copy(dol_buildpath('/theobald/core/doctemplate/OUVERTURE_CPT.pdf'),DOL_DATA_ROOT.'/theobald/modelpdf/ouverture_cpt.pdf', 0, 0);
+        if ($result < 0) return -1;
+        
 
         return $this->_init($sql, $options);
     }

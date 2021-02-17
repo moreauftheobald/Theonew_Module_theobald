@@ -14,18 +14,11 @@
 -- along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-CREATE TABLE llx_affaire(
-	-- BEGIN MODULEBUILDER FIELDS
-	rowid INTEGER AUTO_INCREMENT PRIMARY KEY,
-	entity INTEGER DEFAULT 1 NOT NULL,
-	qty INTEGER DEFAULT 1 NOT NULL,
-	fk_soc INTEGER NOT NULL,
-	fk_product INTEGER NOT NULL,
-	tms timestamp NOT NULL,
-	fk_commande INTEGER,
-	fk_user_creat INTEGER NOT NULL,
-	fk_user_modif INTEGER NOT NULL,
-	date_creation datetime NOT NULL,
-	status INTEGER NOT NULL
-	-- END MODULEBUILDER FIELDS
-) ENGINE=innodb;
+-- BEGIN MODULEBUILDER INDEXES
+ALTER TABLE llx_c_pdv ADD INDEX idx_rowid (rowid);
+-- END MODULEBUILDER INDEXES
+
+--ALTER TABLE llx_mymodule_myobject ADD UNIQUE INDEX uk_mymodule_myobject_fieldxy(fieldx, fieldy);
+
+--ALTER TABLE llx_mymodule_myobject ADD CONSTRAINT llx_mymodule_myobject_fk_field FOREIGN KEY (fk_field) REFERENCES llx_mymodule_myotherobject(rowid);
+

@@ -131,9 +131,9 @@ if (is_array($extrafields->attributes[$object->table_element]['label']) && count
 $object->fields = dol_sort_array($object->fields, 'position');
 $arrayfields = dol_sort_array($arrayfields, 'position');
 
-$permissiontoread = $user->rights->theobald->myobject->read;
-$permissiontoadd = $user->rights->theobald->myobject->write;
-$permissiontodelete = $user->rights->theobald->myobject->delete;
+$permissiontoread = $user->rights->theobald->affaires->read;
+$permissiontoadd = $user->rights->theobald->affaires->write;
+$permissiontodelete = $user->rights->theobald->affaires->delete;
 
 
 /*

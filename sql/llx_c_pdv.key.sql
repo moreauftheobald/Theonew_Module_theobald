@@ -15,7 +15,7 @@
 
 
 -- BEGIN MODULEBUILDER INDEXES
-ALTER TABLE llx_c_pdv ADD INDEX idx_rowid (rowid);
+ALTER TABLE llx_c_gamme ADD INDEX idx_rowid (rowid);
 -- END MODULEBUILDER INDEXES
 
 --ALTER TABLE llx_mymodule_myobject ADD UNIQUE INDEX uk_mymodule_myobject_fieldxy(fieldx, fieldy);
