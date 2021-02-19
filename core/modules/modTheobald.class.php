@@ -148,7 +148,7 @@ class modTheobald extends DolibarrModules
         // Array to add new pages in new tabs
         $this->tabs = array();
         // Example:
-        $this->tabs[] = array('data'=>'thirdparty:+business:Affaires:theobald@theobald:1:/theobald/business/affaire.php?socid=__ID__');  					// To add a new tab identified by code tabname1
+        $this->tabs[] = array('data'=>'thirdparty:+business:Affaires:theobald@theobald:1:/theobald/business/affaire.php?fk_soc=__ID__');  					// To add a new tab identified by code tabname1
         // $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@theobald:$user->rights->othermodule->read:/theobald/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
         // $this->tabs[] = array('data'=>'objecttype:-tabname:NU:conditiontoremove');                                                     										// To remove an existing tab identified by code tabname
         //
@@ -242,9 +242,9 @@ class modTheobald extends DolibarrModules
         $this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $r++;
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
-        $this->rights[$r][1] = 'Creer ses affaires'; // Permission label
+        $this->rights[$r][1] = 'Lire ses affaires'; // Permission label
         $this->rights[$r][4] = 'affaires'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
-        $this->rights[$r][5] = 'write_own'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
+        $this->rights[$r][5] = 'read_own'; // In php code, permission will be checked by test if ($user->rights->theobald->level1->level2)
         $r++;
         $this->rights[$r][0] = $this->numero + $r; // Permission id (must not be already used)
         $this->rights[$r][1] = 'Creer des affaires'; // Permission label
@@ -389,7 +389,7 @@ class modTheobald extends DolibarrModules
         
         define('INC_FROM_DOLIBARR', true);
         
-        require dol_buildpath('/theobald/script/create-maj-base.php');
+        require dol_buildpath('/theobald/scripts/create-maj-base.php');
         
         $result=$this->_load_tables('/theobald/sql/');
 

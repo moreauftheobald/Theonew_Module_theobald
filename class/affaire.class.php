@@ -61,7 +61,7 @@ class Affaire extends SeedObject
 	/**
 	 * @var int  Does object support extrafields ? 0=No, 1=Yes
 	 */
-	public $isextrafieldmanaged = 1;
+	public $isextrafieldmanaged = 0;
 
 	/**
 	 * @var string String with name of icon for myobject. Must be the part after the 'object_' into object_myobject.png
@@ -73,6 +73,13 @@ class Affaire extends SeedObject
 	const STATUS_WON = 4;
 	const STATUS_PENDING = 5;
 	const STATUS_LOST = 8;
+	
+	public static $TStatus = array(
+	    self::STATUS_RUNNING => 'AffairesRunning'
+	    ,self::STATUS_WON => 'affairesWon'
+	    ,self::STATUS_PENDING => 'affairesPending'
+	    ,self::STATUS_LOST => 'affairesLost'
+	);
 
 	/**
 	 *  'type' if the field format ('integer', 'integer:ObjectClass:PathToClass[:AddCreateButtonOrNot[:Filter]]', 'varchar(x)', 'double(24,8)', 'real', 'price', 'text', 'html', 'date', 'datetime', 'timestamp', 'duration', 'mail', 'phone', 'url', 'password')
@@ -104,18 +111,18 @@ class Affaire extends SeedObject
      */
 	public $fields = array(
 	    'rowid'         => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>1, 'visible'=>-2, 'noteditable'=>1, 'notnull'=> 1, 'index'=>1, 'position'=>1, 'comment'=>'Id'),
-	    'entity'        => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>1, 'index'=>1, 'position'=>2),
+	    'entity'        => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>1, 'notnull'=> 1, 'default'=>1, 'index'=>1, 'position'=>2),
 	    'qty'           => array('type'=>'real', 'label'=>'Qty', 'enabled'=>1, 'visible'=>1, 'default'=>'0', 'position'=>5, 'searchall'=>0, 'isameasure'=>1, 'help'=>'Help text for quantity', 'css'=>'maxwidth75imp'),
 	    'fk_soc' 		=> array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'visible'=> 1, 'enabled'=>1, 'position'=>3, 'notnull'=>-1, 'index'=>1, 'help'=>'LinkToThirparty'),
-	    'fk_c_gamme'    => array('type'=>'integer:GammeDictType:theobald/class/affaire.class.php:1:active=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'gamme', 'enabled'=>1, 'visible'=>-1, 'position'=>4, 'notnull'=>-1, 'index'=>1),
-	    'fk_product'    => array('type'=>'integer:Product:product/class/product.class.php:1:tosell=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Produit', 'enabled'=>1, 'visible'=>-1, 'position'=>4, 'notnull'=>-1, 'index'=>1),
-		'date_creation' => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>1, 'visible'=>-2, 'notnull'=> 1, 'position'=>9),
-		'tms'           => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>1, 'visible'=>-2, 'notnull'=> 0, 'position'=>11),
-	    'fk_commande'   => array('type'=>'integer:Commande:commande/class/commande.class.php:1', 'label'=>'Commande', 'enabled'=>1, 'visible'=>-1, 'position'=>7, 'notnull'=>-1, 'index'=>1),
-		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>1, 'visible'=>-2, 'notnull'=> 1, 'position'=>8, 'foreignkey'=>'user.rowid'),
-		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>1, 'visible'=>-2, 'notnull'=>-1, 'position'=>10),
+	    'fk_c_gamme'    => array('type'=>'integer:GammeDictType:theobald/class/affaire.class.php:1:active=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'gamme', 'enabled'=>1, 'visible'=>1, 'position'=>4, 'notnull'=>-1, 'index'=>1),
+	    'fk_product'    => array('type'=>'integer:Product:product/class/product.class.php:1:tosell=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Produit', 'enabled'=>1, 'visible'=>1, 'position'=>4, 'notnull'=>-1, 'index'=>1),
+		'date_creation' => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>1, 'visible'=>1, 'notnull'=> 1, 'position'=>9),
+		'tms'           => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>1, 'visible'=>1, 'notnull'=> 0, 'position'=>11),
+	    'fk_commande'   => array('type'=>'integer:Commande:commande/class/commande.class.php:1', 'label'=>'Commande', 'enabled'=>1, 'visible'=>1, 'position'=>7, 'notnull'=>-1, 'index'=>1),
+		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>1, 'visible'=>1, 'notnull'=> 1, 'position'=>8, 'foreignkey'=>'user.rowid'),
+		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>1, 'visible'=>1, 'notnull'=>-1, 'position'=>10),
 	    'status'        => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>1, 'visible'=>1, 'notnull'=> 1, 'default'=>0, 'index'=>1, 'position'=>6, 'arrayofkeyval'=>array(2=>'Running', 4=>'Won',5=>'Pending', 8=>'Lost')),
-	    'import_key'    => array('type' => 'varchar(14)','label' => 'ImportId','enabled' => 1,'visible' => -2,'notnull' => -1,'index' => 0,'position' => 1000),
+	    'import_key'    => array('type' => 'varchar(14)','label' => 'ImportId','enabled' => 1,'visible' => -1,'notnull' => -1,'index' => 0,'position' => 1000),
 	);
 
 	/**
@@ -179,6 +186,8 @@ class Affaire extends SeedObject
      * @var string import_key
      */
 	public $import_key;
+	
+	public $labelStatus;
 
 
 	/**
@@ -260,15 +269,11 @@ class Affaire extends SeedObject
 	    $result = $object->fetchCommon($fromid);
 	    if ($result > 0 && !empty($object->table_element_line)) $object->fetchLines();
 
-	    // get lines so they will be clone
-	    //foreach($this->lines as $line)
-	    //	$line->fetch_optionals();
 
 	    // Reset some properties
 	    unset($object->id);
 	    unset($object->fk_user_creat);
 	    unset($object->import_key);
-
 
 	    // Clear fields
 	    $object->ref = empty($this->fields['ref']['default']) ? "copy_of_".$object->ref : $this->fields['ref']['default'];
@@ -505,7 +510,6 @@ class Affaire extends SeedObject
 		if ($withpicto) $result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="'.(($withpicto != 2) ? 'paddingright ' : '').'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
 		if ($withpicto != 2) $result .= $this->ref;
 		$result .= $linkend;
-		//if ($withpicto != 2) $result.=(($addlabel && $this->label) ? $sep . dol_trunc($this->label, ($addlabel > 1 ? $addlabel : 0)) : '');
 
 		global $action, $hookmanager;
 		$hookmanager->initHooks(array('myobjectdao'));
@@ -528,7 +532,6 @@ class Affaire extends SeedObject
 		return $this->LibStatut($this->status, $mode);
 	}
 
-    // phpcs:disable PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
 	/**
 	 *  Return the status
 	 *
@@ -536,27 +539,26 @@ class Affaire extends SeedObject
 	 *  @param  int		$mode          0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
 	 *  @return string 			       Label of status
 	 */
-	public function LibStatut($status, $mode = 0)
+	public static function LibStatut($status, $mode)
 	{
-		// phpcs:enable
-		if (empty($this->labelStatus) || empty($this->labelStatusShort))
-		{
-			global $langs;
-			//$langs->load("mymodule");
-			$this->labelStatus[self::STATUS_RUNNING] = $langs->trans('Running');
-			$this->labelStatus[self::STATUS_PENDING] = $langs->trans('Pending');
-			$this->labelStatus[self::STATUS_WON] = $langs->trans('Won');
-			$this->labelStatus[self::STATUS_LOST] = $langs->trans('Lost');
-			$this->labelStatusShort[self::STATUS_RUNNING] = $langs->trans('Running');
-			$this->labelStatusShort[self::STATUS_PENDING] = $langs->trans('Pending');
-			$this->labelStatusShort[self::STATUS_WON] = $langs->trans('Won');
-			$this->labelStatusShorts[self::STATUS_LOST] = $langs->trans('Lost');
-		}
-
-		$statusType = 'status'.$status;
-		return dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
+	    global $langs;
+	    
+	    $langs->load('dolifleet@dolifleet');
+	    $res = '';
+	    
+	    if ($status==self::STATUS_RUNNING) { $statusType='status2'; $statusLabel=$langs->trans('Running'); $statusLabelShort=$langs->trans('Running'); }
+	    elseif ($status==self::STATUS_PENDING) { $statusType='status5'; $statusLabel=$langs->trans('Pending'); $statusLabelShort=$langs->trans('Pending'); }
+	    elseif ($status==self::STATUS_WON) { $statusType='status4'; $statusLabel=$langs->trans('Won'); $statusLabelShort=$langs->trans('Won'); }
+	    elseif ($status==self::STATUS_LOST) { $statusType='status8'; $statusLabel=$langs->trans('Lost'); $statusLabelShort=$langs->trans('Lost'); }
+	    
+	    if (function_exists('dolGetStatus'))
+	    {
+	        $res = dolGetStatus($statusLabel, $statusLabelShort, '', $statusType, $mode);
+	    }
+	    
+	    return $res;
 	}
-
+	
 	/**
 	 *	Load the info information in the object
 	 *
@@ -657,17 +659,57 @@ class GammeDictType extends SeedObject
     
     public $element = 'gamme';
     
+    public $ismultientitymanaged = 0;
+    
+    public $isextrafieldmanaged = 0;
+    
+    public $picto = 'myobject@mymodule';
+    
     public $fields = array(
-        'code' => array('type' => 'varchar(20)','length' => 20,'label' => 'Code','enabled' => 1,'visible' => 1,'notnull' => 1,'index' => 1),
+        'rowid'  => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>1, 'visible'=>-2, 'noteditable'=>1, 'notnull'=> 1, 'index'=>1, 'position'=>1, 'comment'=>'Id'),
+        'code'   => array('type' => 'varchar(20)','length' => 20,'label' => 'Code','enabled' => 1,'visible' => 1,'notnull' => 1,'index' => 1),
         'entity' => array('type' => 'integer','label' => 'Entity','enabled' => 1,'visible' => 0,'default' => 1,'notnull' => 1,'index' => 1,'position' => 20),
         'active' => array('type' => 'integer','label' => 'Active','enabled' => 1,'visible' => 0,'notnull' => 1,'default' => 0,'index' => 1,'position' => 30,'arrayofkeyval' => array(0 => 'Disabled',1 => 'Active')),
-        'label' => array('type' => 'varchar(255)','label' => 'Label','enabled' => 1,'visible' => 1,'position' => 40,'searchall' => 1,'css' => 'minwidth200','showoncombobox' => 1),
+        'label'  => array('type' => 'varchar(255)','label' => 'Label','enabled' => 1,'visible' => 1,'position' => 40,'searchall' => 1,'css' => 'minwidth200','showoncombobox' => 1),
     );
     
+    public $rowid;
+    public $code;
+    public $entity;
+    public $active;
+    public $label;
     
     public function __construct($db)
-    {
+    {   
+        global $conf, $langs;
         $this->db = $db;
+        
+        if (empty($conf->global->MAIN_SHOW_TECHNICAL_ID) && isset($this->fields['rowid'])) $this->fields['rowid']['visible'] = 0;
+        if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) $this->fields['entity']['enabled'] = 0;
+        
+        foreach ($this->fields as $key => $val)
+        {
+            if (isset($val['enabled']) && empty($val['enabled']))
+            {
+                unset($this->fields[$key]);
+            }
+        }
+        
+        if (is_object($langs))
+        {
+            foreach($this->fields as $key => $val)
+            {
+                if (is_array($val['arrayofkeyval']))
+                {
+                    foreach($val['arrayofkeyval'] as $key2 => $val2)
+                    {
+                        $this->fields[$key]['arrayofkeyval'][$key2]=$langs->trans($val2);
+                    }
+                }
+            }
+        }
+        
+        $this->init();
         
     }
     
@@ -698,15 +740,12 @@ class GammeDictType extends SeedObject
     
     public function getValueFromId($id, $field = 'label')
     {
-        global $langs;
-        
-        $dict = new static($this->db);
+        $dict = new Static($this->db);
         $ret = $dict->fetch($id);
         if ($ret > 0 && isset($dict->{$field}))
         {
             return $dict->{$field};
         }
-        
         return '';
     }
     
@@ -721,19 +760,58 @@ class PdvDictType extends SeedObject
     public $table_element = 'c_pdv';
     
     public $element = 'pdv';
+   
+    public $ismultientitymanaged = 0;
+    
+    public $isextrafieldmanaged = 0;
+    
+    public $picto = 'myobject@mymodule';
     
     public $fields = array(
-        'code' => array('type' => 'varchar(20)','length' => 20,'label' => 'Code','enabled' => 1,'visible' => 1,'notnull' => 1,'index' => 1),
+        'rowid'  => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>1, 'visible'=>-2, 'noteditable'=>1, 'notnull'=> 1, 'index'=>1, 'position'=>1, 'comment'=>'rowid'),
+        'code'   => array('type' => 'varchar(20)','length' => 20,'label' => 'Code','enabled' => 1,'visible' => 1,'notnull' => 1,'index' => 1),
         'entity' => array('type' => 'integer','label' => 'Entity','enabled' => 1,'visible' => 0,'default' => 1,'notnull' => 1,'index' => 1,'position' => 20),
         'active' => array('type' => 'integer','label' => 'Active','enabled' => 1,'visible' => 0,'notnull' => 1,'default' => 0,'index' => 1,'position' => 30,'arrayofkeyval' => array(0 => 'Disabled',1 => 'Active')),
-        'label' => array('type' => 'varchar(255)','label' => 'Label','enabled' => 1,'visible' => 1,'position' => 40,'searchall' => 1,'css' => 'minwidth200','showoncombobox' => 1),
+        'label'  => array('type' => 'varchar(255)','label' => 'Label','enabled' => 1,'visible' => 1,'position' => 40,'searchall' => 1,'css' => 'minwidth200','showoncombobox' => 1),
     );
     
+    public $rowid;
+    public $code;
+    public $entity;
+    public $active;
+    public $label;
     
     public function __construct($db)
     {
+        global $conf, $langs;
         $this->db = $db;
         
+        if (empty($conf->global->MAIN_SHOW_TECHNICAL_ID) && isset($this->fields['rowid'])) $this->fields['rowid']['visible'] = 0;
+        if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) $this->fields['entity']['enabled'] = 0;
+        
+        foreach ($this->fields as $key => $val)
+        {
+            if (isset($val['enabled']) && empty($val['enabled']))
+            {
+                unset($this->fields[$key]);
+            }
+        }
+        
+        if (is_object($langs))
+        {
+            foreach($this->fields as $key => $val)
+            {
+                if (is_array($val['arrayofkeyval']))
+                {
+                    foreach($val['arrayofkeyval'] as $key2 => $val2)
+                    {
+                        $this->fields[$key]['arrayofkeyval'][$key2]=$langs->trans($val2);
+                    }
+                }
+            }
+        }
+        
+        $this->init();
     }
     
     public function getAllActiveArray($field = '')
@@ -772,7 +850,7 @@ class PdvDictType extends SeedObject
             return $dict->{$field};
         }
         
-        return '';
+        return $dict->{$field};
     }
     
     public function getNomUrl($getnomurlparam = '')

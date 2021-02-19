@@ -36,7 +36,7 @@ $o->init_db_by_vars();
 
 /* Dictionnaries */
 
-dol_include_once('/affaire/class/affaire.class.php');
+dol_include_once('/theobald/class/affaire.class.php');
 $o=new GammeDictType($db);
 $o->init_db_by_vars();
 
@@ -48,6 +48,6 @@ $o->init_db_by_vars();
 
 /* Objects */
 
-dol_include_once('/affaire/class/affaire.class.php');
+dol_include_once('/theobald/class/affaire.class.php');
 $o=new Affaire($db);
 $o->init_db_by_vars();
